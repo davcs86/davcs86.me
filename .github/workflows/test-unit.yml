@@ -19,13 +19,13 @@ jobs:
         node-version: [12.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Install Node v${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Install dependencies
-      run: yarn --frozen-lockfile
+      - uses: actions/checkout@v2
+      - name: Install Node v${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
 
   build:
     needs: install
@@ -58,8 +58,8 @@ jobs:
     needs: [build,test,lint]
     runs-on: ubuntu-latest
     steps:
-      - uses: appleboy/scp-action@master
       - name: Deploy
+        uses: appleboy/scp-action@master
         env:
           HOST: ${{ secrets.HOST }}
           USERNAME: ${{ secrets.USERNAME }}
