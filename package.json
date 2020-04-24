@@ -1,0 +1,17 @@
+{
+  "name": "davcs86.me",
+  "version": "0.0.0",
+  "description": "davcs86.me source code",
+  "main": "app.js",
+  "repository": "git@github.com:davcs86/davcs86.me.git",
+  "author": "David Castillo <davcs86@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "lint": "echo 0",
+    "test": "echo 0"
+  },
+  "devDependencies": {
+    "express": "^4.17.1"
+  }
+}
