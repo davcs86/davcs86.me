@@ -11,35 +11,29 @@ on:
 
 jobs:
   install:
-
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x]
-
     steps:
       - uses: actions/checkout@v2
-      - name: Install Node v${{ matrix.node-version }}
+      - name: Install Node
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 12.x
       - name: Install dependencies
         run: yarn --frozen-lockfile
-
-  build:
-    needs: install
-    runs-on: ubuntu-latest
-    steps:
-      - name: Build
-        run: yarn run build
-        env:
-          NODE_ENV: production
+      - name: Upload node modules
+        uses: actions/upload-artifact@v1
+        with:
+          name: node_modules
+          path: "."
 
   test:
     needs: install
     runs-on: ubuntu-latest
     steps:
+      - name: Download node modules
+        uses: actions/download-artifact@v1
+        with:
+          name: node_modules
       - name: Unit test
         run: yarn run test
         env:
@@ -49,15 +43,41 @@ jobs:
     needs: install
     runs-on: ubuntu-latest
     steps:
+      - name: Download node modules
+        uses: actions/download-artifact@v1
+        with:
+          name: node_modules
       - name: Lint
         run: yarn run lint
         env:
           NODE_ENV: production
- 
-  deploy:
-    needs: [build,test,lint]
+
+  build:
+    needs: [lint,test]
     runs-on: ubuntu-latest
     steps:
+      - name: Download node modules
+        uses: actions/download-artifact@v1
+        with:
+          name: node_modules
+      - name: Build
+        run: yarn run build
+        env:
+          NODE_ENV: production
+      - name: Upload build
+        uses: actions/upload-artifact@v1
+        with:
+          name: build
+          path: "."
+ 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build
+        uses: actions/download-artifact@v1
+        with:
+          name: build
       - name: Deploy
         uses: appleboy/scp-action@master
         env:
