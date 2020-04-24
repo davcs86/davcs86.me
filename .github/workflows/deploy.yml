@@ -34,6 +34,8 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: node_modules
+          path: "."
+      - run: ls . -al
       - name: Unit test
         run: yarn run test
         env:
@@ -47,6 +49,8 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: node_modules
+          path: "."
+      - run: ls . -al
       - name: Lint
         run: yarn run lint
         env:
@@ -60,6 +64,8 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: node_modules
+          path: "."
+      - run: ls . -al
       - name: Build
         run: yarn run build
         env:
@@ -78,6 +84,8 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: build
+          path: "."
+      - run: ls . -al
       - name: Deploy
         uses: appleboy/scp-action@master
         env:
