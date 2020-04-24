@@ -26,6 +26,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Install dependencies
     - run: yarn --frozen-lockfile
+    - name: Run unit testing
     - run: yarn run test
       env:
         env: production
