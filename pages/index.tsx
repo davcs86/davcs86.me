@@ -1,10 +1,20 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
+import React from "react";
 
-const Title = styled.h1`
-  color: red;
-  font-size: 50px;
+ const BodyWrapper = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
 `
 
-export default function Home() {
-  return <Title>My page</Title>
-}
+const Title = styled.h1`
+  color: #3c3c3c;
+  font-size: 24px;
+`
+
+export default () => (
+      <BodyWrapper>
+        <Title>davcs86's page - under construction</Title>
+        <a href="https://github.com/davcs86" target="_blank" title="Github page">My Github page</a>
+      </BodyWrapper>
+  );
